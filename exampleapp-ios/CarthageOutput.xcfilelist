@@ -1,0 +1,25 @@
+#  CarthageOutput.xcfilelist
+#  ExampleApp
+#
+#  Created by Sebastian Owodzin on 18/04/2019.
+#  Copyright © 2019 mobiletoolkit.org. All rights reserved.
+
+# This file may be set as an input or output file list for a shell script build phase.
+# List file paths below; one per line. These paths will be considered inputs or outputs for the script phase.
+# Build settings will be expanded, e.g. $(SRCROOT)/fileName
+
+#$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/BoringSSL-GRPC.framework
+#$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/FirebaseAnalytics.framework
+#$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/FirebaseFirestore.framework
+#$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/GoogleUtilities.framework
+#$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/gRPC-Core.framework
+#$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/FIRAnalyticsConnector.framework
+#$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/FirebaseCore.framework
+#$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/FirebaseInstanceID.framework
+#$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Protobuf.framework
+#$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/leveldb-library.framework
+#$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Firebase.framework
+#$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/FirebaseCoreDiagnostics.framework
+#$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/GoogleAppMeasurement.framework
+#$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/gRPC-C++.framework
+#$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/nanopb.framework

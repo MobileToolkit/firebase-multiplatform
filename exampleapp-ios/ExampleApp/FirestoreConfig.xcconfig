@@ -1,0 +1,12 @@
+//
+//  Config.xcconfig
+//  ExampleApp
+//
+//  Created by Sebastian Owodzin on 18/04/2019.
+//  Copyright © 2019 mobiletoolkit.org. All rights reserved.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+FRAMEWORK_SEARCH_PATHS = $(inherited) $SRCROOT/../Carthage/Build/iOS $SRCROOT/../firestore/build/xcode-frameworks

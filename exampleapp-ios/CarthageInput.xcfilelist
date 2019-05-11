@@ -1,0 +1,25 @@
+#  CarthageInput.xcfilelist
+#  ExampleApp
+#
+#  Created by Sebastian Owodzin on 18/04/2019.
+#  Copyright © 2019 mobiletoolkit.org. All rights reserved.
+
+# This file may be set as an input or output file list for a shell script build phase.
+# List file paths below; one per line. These paths will be considered inputs or outputs for the script phase.
+# Build settings will be expanded, e.g. $(SRCROOT)/fileName
+
+#$(SRCROOT)/Carthage/Build/iOS/BoringSSL-GRPC.framework
+#$(SRCROOT)/Carthage/Build/iOS/FirebaseAnalytics.framework
+#$(SRCROOT)/Carthage/Build/iOS/FirebaseFirestore.framework
+#$(SRCROOT)/Carthage/Build/iOS/GoogleUtilities.framework
+#$(SRCROOT)/Carthage/Build/iOS/gRPC-Core.framework
+#$(SRCROOT)/Carthage/Build/iOS/FIRAnalyticsConnector.framework
+#$(SRCROOT)/Carthage/Build/iOS/FirebaseCore.framework
+#$(SRCROOT)/Carthage/Build/iOS/FirebaseInstanceID.framework
+#$(SRCROOT)/Carthage/Build/iOS/Protobuf.framework
+#$(SRCROOT)/Carthage/Build/iOS/leveldb-library.framework
+#$(SRCROOT)/Carthage/Build/iOS/Firebase.framework
+#$(SRCROOT)/Carthage/Build/iOS/FirebaseCoreDiagnostics.framework
+#$(SRCROOT)/Carthage/Build/iOS/GoogleAppMeasurement.framework
+#$(SRCROOT)/Carthage/Build/iOS/gRPC-C++.framework
+#$(SRCROOT)/Carthage/Build/iOS/nanopb.framework

@@ -1,0 +1,171 @@
+apply plugin: 'kotlin-multiplatform'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlinx-serialization'
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 28
+    defaultConfig {
+        minSdkVersion 16
+        targetSdkVersion 28
+        versionCode 1
+        versionName '1.0'
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    lintOptions {
+        lintConfig file('lint.xml')
+//        htmlReport true
+//        htmlOutput file('lint-report.html')
+        abortOnError true
+        warningsAsErrors true
+    }
+}
+
+androidExtensions {
+    experimental = true
+}
+
+//compileKotlin {
+//    kotlinOptions {
+//        freeCompilerArgs += "-Xuse-experimental=kotlin.Experimental"
+//    }
+//}
+
+dependencies {
+    implementation 'com.android.support:appcompat-v7:28.0.0'
+    implementation 'com.android.support:support-v4:28.0.0'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    testImplementation "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
+}
+
+ext {
+    ios_framework_name = 'MTFirestore'
+}
+
+kotlin {
+    android("android")
+
+//    iosX64("ios") {
+//        compilations.main.outputKinds("framework")
+//    }
+
+    targets {
+//        final def workingDir = buildscript.sourceFile.getParent()
+        final def cinteropsPath = "../Carthage/Build/iOS/"
+        final def iosTarget = System.getenv('SDK_NAME')?.startsWith("iphoneos") ? presets.iosArm64 : presets.iosX64
+
+        fromPreset(iosTarget, 'ios') {
+            binaries {
+                framework("$ios_framework_name") {
+                    embedBitcode('disable')
+                    linkerOpts '-rpath', '@executable_path/Frameworks'
+                    linkerOpts "-F${cinteropsPath}"
+//                    linkerOpts '-framework Foundation'
+//                    linkerOpts '-framework MobileCoreServices'
+//                    linkerOpts '-framework StoreKit'
+//                    linkerOpts '-framework SystemConfiguration'
+//                    linkerOpts '-lz'
+//                    linkerOpts '-lsqlite3'
+                }
+            }
+            compilations.main {
+                cinterops {
+                    firestore {
+                        packageName 'com.google.firebase.firestore'
+                        defFile = file('FirebaseFirestore.def')
+                        linkerOpts "-F${cinteropsPath}" // /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/10.0.1/lib/darwin/libclang_rt.osx.a
+                        includeDirs "${cinteropsPath}/FirebaseFirestore.framework/Headers"
+                    }
+                }
+            }
+        }
+    }
+//    sourceSets {
+//        commonMain.dependencies {
+//            implementation 'org.jetbrains.kotlin:kotlin-stdlib-common'
+//        }
+//        androidMain.dependencies {
+//            implementation 'com.google.firebase:firebase-firestore:18.2.0'
+//        }
+//    }
+    sourceSets {
+        commonMain {
+            dependencies {
+                implementation kotlin('stdlib-common')
+//                implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core-common:$coroutines_version"
+                implementation "org.jetbrains.kotlinx:kotlinx-serialization-runtime-common:$serialization_version"
+            }
+        }
+        commonTest {
+            dependencies {
+                implementation kotlin('test-common')
+                implementation kotlin('test-annotations-common')
+            }
+        }
+        androidMain {
+            configurations {
+                compile.exclude group: 'org.jetbrains.kotlinx', module: 'atomicfu-common'
+                compile.exclude group: 'org.jetbrains.kotlinx', module: 'kotlinx-coroutines-core'
+            }
+
+            dependencies {
+                implementation kotlin('stdlib')
+                api 'com.google.firebase:firebase-firestore:19.0.0'
+//                implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
+//                implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
+                implementation "org.jetbrains.kotlinx:kotlinx-serialization-runtime:$serialization_version"
+            }
+        }
+        androidTest {
+            dependencies {
+                implementation kotlin('test')
+                implementation kotlin('test-junit')
+            }
+        }
+        iosMain {
+            dependencies {
+//                implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core-native:$coroutines_version"
+                implementation "org.jetbrains.kotlinx:kotlinx-serialization-runtime-native:$serialization_version"
+            }
+        }
+        iosTest {
+        }
+    }
+}
+
+task packForXcode {
+    final File frameworkDir = new File(buildDir, "xcode-frameworks")
+    final String buildType = project.findProperty("XCODE_CONFIGURATION")?.toUpperCase() ?: 'DEBUG'
+
+    def keyFrameworkPrefix = "$ios_framework_name${buildType.toLowerCase().capitalize()}"
+    dependsOn "link${keyFrameworkPrefix}FrameworkIos"
+
+    doLast {
+        def srcFile = kotlin.targets.ios.binaries.getFramework("$ios_framework_name", buildType).outputFile
+
+        copy {
+            from srcFile.parent
+            into frameworkDir
+        }
+
+        new File(frameworkDir, 'gradlew').with {
+            text = "#!/bin/bash\nexport 'JAVA_HOME=${System.getProperty("java.home")}'\ncd '${rootProject.rootDir}'\n./gradlew \$@\n"
+            setExecutable(true)
+        }
+    }
+}
+
+tasks.build.dependsOn packForXcode
+
+task carthageBuild(type: Exec) {
+    executable "sh"
+    args "-c", "carthage build --platform ios --cache-builds --project-directory ../ FirebaseFirestoreBinary"
+}
+
+cinteropFirestoreIos.dependsOn carthageBuild
