@@ -6,23 +6,53 @@
 //  Copyright © 2019 mobiletoolkit.org. All rights reserved.
 //
 
+import ExampleAppShared
 import FirebaseFirestore
-import MTFirestore
 import UIKit
 
 class ViewController: UIViewController {
 
+    private var productsRepository: ProductsRepository? = nil
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
 
-        ProductsRepository(db: Firestore.firestore()).exists(identifier: "tm4BBM2ZWZH7GAO86jnL") { (exists, error) -> KotlinUnit in
-            let ex = exists as! Bool
-
+        productsRepository = ProductsRepository(db: Firestore.firestore())
+        
+//        let exists = ProductsRepository(db: Firestore.firestore()).exists(identifier: "3BheEX4po6D8kmbh5REc")
+        
+        productsRepository?.get(identifier: "tm4BBM2ZWZH7GAO86jnL") { (product, error) -> KotlinUnit in
             let i = 0
-
+            
+            print("product: \(String(describing: product))")
+            
             return KotlinUnit()
         }
+        
+//        let products = ProductsRepository(db: Firestore.firestore()).get()
+        
+//        let i = 0
+        
+//        ProductsRepository(db: Firestore.firestore()).exists(identifier: "3BheEX4po6D8kmbh5REc") { (exists, error) -> KotlinUnit in
+//            let ex = exists as! Bool
+//
+//            let i = 0
+//
+//            return KotlinUnit()
+//        }
+        
+//        ProductsRepository(db: Firestore.firestore()).get(identifier: "tm4BBM2ZWZH7GAO86jnL") { (product, error) -> KotlinUnit in
+//            let i = 0
+//            
+//            return KotlinUnit()
+//        }
+//        
+//        ProductsRepository(db: Firestore.firestore()).get() { (products, error) -> KotlinUnit in
+//            let i = 0
+//            
+//            return KotlinUnit()
+//        }
     }
 
 

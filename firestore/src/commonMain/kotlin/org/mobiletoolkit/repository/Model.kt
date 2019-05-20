@@ -5,8 +5,5 @@ package org.mobiletoolkit.repository
  */
 interface Model<Identifier> {
     val identifier: Identifier?
-}
-
-interface Serializer<T: Any> {
-    fun deserialize(data: Any): T?
+        get() = null
 }

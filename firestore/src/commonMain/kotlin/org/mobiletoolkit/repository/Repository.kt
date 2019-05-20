@@ -5,7 +5,7 @@ package org.mobiletoolkit.repository
  */
 interface Repository<Identifier, Entity : Model<Identifier>> {
 
-    fun exists(identifier: Identifier): Boolean
+//    fun exists(identifier: Identifier): Boolean
 
     fun get(identifier: Identifier): Entity?
 

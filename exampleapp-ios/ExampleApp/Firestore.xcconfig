@@ -9,4 +9,5 @@
 // Configuration settings file format documentation can be found at:
 // https://help.apple.com/xcode/#/dev745c5c974
 
-FRAMEWORK_SEARCH_PATHS = $(inherited) $SRCROOT/../Carthage/Build/iOS $SRCROOT/../firestore/build/xcode-frameworks
+ROOT_PROJECT_DIR = $SRCROOT/..
+FRAMEWORK_SEARCH_PATHS = $(inherited) $ROOT_PROJECT_DIR/Carthage/Build/iOS $ROOT_PROJECT_DIR/build/xcode-frameworks

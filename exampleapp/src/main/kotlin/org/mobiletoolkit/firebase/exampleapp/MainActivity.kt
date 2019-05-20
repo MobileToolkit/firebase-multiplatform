@@ -1,8 +1,8 @@
 package org.mobiletoolkit.firebase.exampleapp
 
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.support.design.widget.NavigationView
+import android.support.design.widget.Snackbar
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
@@ -15,15 +15,18 @@ import org.mobiletoolkit.firebase.exampleapp.firestore.ProductsRepository
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
+    private lateinit var productsRepository: ProductsRepository
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
         setSupportActionBar(toolbar)
 
-//        fab.setOnClickListener { view ->
-//            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                .setAction("Action", null).show()
-//        }
+        fab.setOnClickListener { view ->
+            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show()
+        }
 
         val toggle = ActionBarDrawerToggle(
             this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close
@@ -33,17 +36,17 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         nav_view.setNavigationItemSelectedListener(this)
 
-//        ProductsRepository(FirebaseFirestore.getInstance()).exists("3BheEX4po6D8kmbh5REc") { exists, error ->
-//            val i = 0
-//        }
-//
-//        ProductsRepository(FirebaseFirestore.getInstance()).get("tm4BBM2ZWZH7GAO86jnL") { product, error ->
-//            val i = 0
-//        }
+        productsRepository = ProductsRepository(FirebaseFirestore.getInstance())
 
-        ProductsRepository(FirebaseFirestore.getInstance()).get { products, error ->
+//        val exists = productsRepository.exists("3BheEX4po6D8kmbh5REc")
+
+        productsRepository.get("tm4BBM2ZWZH7GAO86jnL") { entity, error ->
             val i = 0
         }
+
+//        val products = productsRepository.get()
+
+        val i = 0
     }
 
     override fun onBackPressed() {

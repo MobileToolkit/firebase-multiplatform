@@ -23,6 +23,8 @@ xcuserdata/
 *.dSYM.zip
 *.dSYM
 
-Carthage/Build
+/.idea
 
-ExampleApp/GoogleService-Info.plist
+/Carthage
+
+/ExampleApp/GoogleService-Info.plist
