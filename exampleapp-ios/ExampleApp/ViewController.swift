@@ -32,7 +32,13 @@ class ViewController: UIViewController {
         
 //        let products = ProductsRepository(db: Firestore.firestore()).get()
         
-//        let i = 0
+        productsRepository?.get { (products, error) -> KotlinUnit in
+            let i = 0
+            
+            print("product: \(String(describing: product))")
+            
+            return KotlinUnit()
+        }
         
 //        ProductsRepository(db: Firestore.firestore()).exists(identifier: "3BheEX4po6D8kmbh5REc") { (exists, error) -> KotlinUnit in
 //            let ex = exists as! Bool

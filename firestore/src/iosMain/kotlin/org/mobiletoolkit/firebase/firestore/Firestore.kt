@@ -3,15 +3,23 @@ package org.mobiletoolkit.firebase.firestore
 /**
  * Created by Sebastian Owodzin on 02/06/2019.
  */
-
 actual typealias Firestore = com.google.firebase.firestore.FIRFirestore
+
 actual typealias CollectionReference = com.google.firebase.firestore.FIRCollectionReference
 actual typealias DocumentReference = com.google.firebase.firestore.FIRDocumentReference
 actual typealias DocumentSnapshot = com.google.firebase.firestore.FIRDocumentSnapshot
 
 actual fun Firestore.withPath(path: String) = collectionWithPath(path)
 
-actual fun CollectionReference.docWithID(id: String) = documentWithPath(id)
+actual fun CollectionReference.documentWithID(id: String) = documentWithPath(id)
+actual fun CollectionReference.getWithCallback(callback: (documents: List<DocumentSnapshot>, error: String?) -> Unit) {
+    getDocumentsWithCompletion { snapshot, error ->
+        callback(
+            snapshot?.documents as? List<DocumentSnapshot> ?: listOf(),
+            error?.localizedDescription
+        )
+    }
+}
 
 actual fun DocumentReference.docID() = documentID
 actual fun DocumentReference.getWithCallback(callback: (snapshot: DocumentSnapshot?, error: String?) -> Unit) {

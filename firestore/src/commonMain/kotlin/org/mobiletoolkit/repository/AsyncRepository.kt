@@ -5,9 +5,7 @@ package org.mobiletoolkit.repository
  */
 interface AsyncRepository<Identifier, Entity : Model<Identifier>> {
 
-//    fun exists(identifier: Identifier, callback: AsyncRepositoryCallback<Boolean>)
-
-    fun get(identifier: Identifier, callback: (entity: Entity?, error: String?) -> Unit)
+    fun get(identifier: Identifier, callback: AsyncRepositoryCallback<Entity?>)
 
 //    fun create(entity: Entity, identifier: Identifier? = null, callback: AsyncRepositoryCallback<Boolean>)
 ////    fun create(vararg entities: Entity, callback: AsyncRepositoryCallback<Boolean>)
@@ -25,7 +23,7 @@ interface AsyncRepository<Identifier, Entity : Model<Identifier>> {
 ////    fun delete(vararg entities: Entity, callback: AsyncRepositoryCallback<Boolean>)
 ////    fun delete(vararg identifiers: Identifier, callback: AsyncRepositoryCallback<Boolean>)
 //
-//    fun get(callback: AsyncRepositoryCallback<List<Entity>>)
+    fun get(callback: AsyncRepositoryCallback<List<Entity>>)
 
 //    // Listeners
 //
@@ -56,10 +54,10 @@ interface AsyncRepository<Identifier, Entity : Model<Identifier>> {
 //    }
 }
 
-//typealias AsyncRepositoryCallback<DataType> = (
-//    data: DataType,
-//    error: String?
-//) -> Unit
+typealias AsyncRepositoryCallback<DataType> = (
+    data: DataType,
+    error: String?
+) -> Unit
 
 //typealias AsyncRepositoryListener<DataType, ChangeType> = (
 //    data: DataType?,

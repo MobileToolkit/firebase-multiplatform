@@ -40,11 +40,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
 //        val product = productsRepository.get("3BheEX4po6D8kmbh5REc")
 
-        productsRepository.get("tm4BBM2ZWZH7GAO86jnL") { entity, error ->
+        productsRepository.get("tm4BBM2ZWZH7GAO86jnL") { product, error ->
             val i = 0
         }
 
 //        val products = productsRepository.get()
+
+        productsRepository.get { products, error ->
+            val i = 0
+        }
 
         val i = 0
     }
