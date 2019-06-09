@@ -28,5 +28,3 @@ import org.mobiletoolkit.repository.Model
 ////        return identifier?.hashCode() ?: super.hashCode()
 ////    }
 //}
-
-actual typealias DocumentReference = DocumentReference

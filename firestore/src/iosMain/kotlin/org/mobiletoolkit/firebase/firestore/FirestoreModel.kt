@@ -16,5 +16,3 @@ import org.mobiletoolkit.repository.Model
 ////    override val identifier: String?
 ////        get() = documentReference?.documentID
 //}
-
-actual typealias DocumentReference = FIRDocumentReference

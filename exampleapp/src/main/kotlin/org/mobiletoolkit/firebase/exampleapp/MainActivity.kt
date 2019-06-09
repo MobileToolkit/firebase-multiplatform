@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         productsRepository = ProductsRepository(FirebaseFirestore.getInstance())
 
-//        val exists = productsRepository.exists("3BheEX4po6D8kmbh5REc")
+//        val product = productsRepository.get("3BheEX4po6D8kmbh5REc")
 
         productsRepository.get("tm4BBM2ZWZH7GAO86jnL") { entity, error ->
             val i = 0

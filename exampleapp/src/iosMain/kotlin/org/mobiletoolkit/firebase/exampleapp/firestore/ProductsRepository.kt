@@ -19,7 +19,7 @@ actual class ProductsRepository(
     override val collectionPath = "/products"
 
     override fun deserialize(snapshot: FIRDocumentSnapshot): Product? =
-//        snapshot.data()?.let { Mapper.unmap(Product.serializer(), it as Map<String, Any>) }
+//        snapshot.data()?.let { Mapper.unmap(Product.serializer(), it as Map<String, Any>) } // FIXME - this seems to be not working on iOS
         snapshot.data()?.let {
             try {
                 println("data: $it")
@@ -27,8 +27,6 @@ actual class ProductsRepository(
                 val data = it as Map<String, Any>
 
                 Product(data["name"] as String, data["description"] as String, data["price"] as Double)
-
-//                Mapper.unmap(Product.serializer(), it as Map<String, Any>)
             } catch (e: Exception) {
                 e.printStackTrace()
                 println("exception: ${e.cause?.message}")
