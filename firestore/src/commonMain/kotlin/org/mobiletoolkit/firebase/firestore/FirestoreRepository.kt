@@ -41,6 +41,15 @@ abstract class FirestoreRepository<Entity : FirestoreModel>(
             )
         }
     }
+
+    fun get(queryBlock: (query: Query) -> Query, callback: AsyncRepositoryCallback<List<Entity>>) {
+        collectionReference.getWithCallback(queryBlock) { documents, error ->
+            callback(
+                documents.mapNotNull { buildEntity(it) },
+                error
+            )
+        }
+    }
 }
 
 //expect fun getMainDispatcher(): CoroutineDispatcher

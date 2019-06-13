@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import org.mobiletoolkit.firebase.exampleapp.firestore.ProductsRepository
@@ -46,9 +47,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
 //        val products = productsRepository.get()
 
-        productsRepository.get { products, error ->
+        productsRepository.get({
+//            it.whereEqualTo("name", "qwerty")
+            it.orderBy("price")
+        }, { products, error ->
             val i = 0
-        }
+        })
+
+//        productsRepository.get { products, error ->
+//            val i = 0
+//        }
 
         val i = 0
     }

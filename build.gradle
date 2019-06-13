@@ -31,3 +31,8 @@ task carthageBuild(type: Exec) {
     executable "sh"
     args "-c", "/usr/local/bin/carthage build --cache-builds --project-directory ${rootDir}"
 }
+
+task carthageUpdate(type: Exec) {
+    executable "sh"
+    args "-c", "/usr/local/bin/carthage update --cache-builds --project-directory ${rootDir}"
+}
