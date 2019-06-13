@@ -2,6 +2,7 @@ package org.mobiletoolkit.firebase.firestore
 
 import org.mobiletoolkit.repository.AsyncRepository
 import org.mobiletoolkit.repository.AsyncRepositoryCallback
+import org.mobiletoolkit.repository.AsyncRepositoryListener
 
 /**
  * Created by Sebastian Owodzin on 17/04/2019.
@@ -25,9 +26,9 @@ abstract class FirestoreRepository<Entity : FirestoreModel>(
     }
 
     override fun get(identifier: String, callback: AsyncRepositoryCallback<Entity?>) {
-        documentReference(identifier).getWithCallback { snapshot, error ->
+        documentReference(identifier).getWithCallback { document, error ->
             callback(
-                snapshot?.let { buildEntity(it) },
+                document?.let { buildEntity(it) },
                 error
             )
         }
@@ -45,6 +46,15 @@ abstract class FirestoreRepository<Entity : FirestoreModel>(
     fun get(queryBlock: (query: Query) -> Query, callback: AsyncRepositoryCallback<List<Entity>>) {
         collectionReference.getWithCallback(queryBlock) { documents, error ->
             callback(
+                documents.mapNotNull { buildEntity(it) },
+                error
+            )
+        }
+    }
+
+    override fun listen(listener: AsyncRepositoryListener<List<Entity>>) {
+        val listenerRegistration = collectionReference.getWithSnapshotListener { documents, error ->
+            listener(
                 documents.mapNotNull { buildEntity(it) },
                 error
             )

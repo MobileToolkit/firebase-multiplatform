@@ -12,7 +12,9 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
+import org.mobiletoolkit.firebase.exampleapp.firestore.Product
 import org.mobiletoolkit.firebase.exampleapp.firestore.ProductsRepository
+import org.mobiletoolkit.repository.AsyncRepositoryListener
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -41,9 +43,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
 //        val product = productsRepository.get("3BheEX4po6D8kmbh5REc")
 
-        productsRepository.get("tm4BBM2ZWZH7GAO86jnL") { product, error ->
+        productsRepository.get("tm4BBM2ZWZH7GAO86jnL", callback = { product, error ->
             val i = 0
-        }
+        })
 
 //        val products = productsRepository.get()
 
@@ -54,9 +56,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             val i = 0
         })
 
-//        productsRepository.get { products, error ->
-//            val i = 0
-//        }
+        productsRepository.get(callback = { products, error ->
+            val i = 0
+        })
+
+        productsRepository.listen { products, error ->
+            val i = 0
+        }
 
         val i = 0
     }

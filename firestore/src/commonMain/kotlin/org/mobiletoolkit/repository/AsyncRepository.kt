@@ -27,12 +27,9 @@ interface AsyncRepository<Identifier, Entity : Model<Identifier>> {
 
 //    // Listeners
 //
-//    fun get(
-//        identifier: Identifier,
-//        listener: AsyncRepositoryListener<Entity, Entity>
-//    )
+//    fun get(identifier: Identifier, listener: AsyncRepositoryListener<Entity>)
 //
-//    fun get(listener: AsyncRepositoryListener<List<Entity>, Entity>)
+    fun listen(listener: AsyncRepositoryListener<List<Entity>>)
 //
 //    fun releaseListener(listener: AsyncRepositoryListener<*, Entity>)
 //
@@ -56,6 +53,11 @@ interface AsyncRepository<Identifier, Entity : Model<Identifier>> {
 
 typealias AsyncRepositoryCallback<DataType> = (
     data: DataType,
+    error: String?
+) -> Unit
+
+typealias AsyncRepositoryListener<DataType> = (
+    data: DataType?,
     error: String?
 ) -> Unit
 
