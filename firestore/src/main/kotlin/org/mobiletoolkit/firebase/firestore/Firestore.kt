@@ -42,4 +42,13 @@ actual fun DocumentReference.getWithCallback(callback: DocumentCallback) {
     }
 }
 
+actual fun DocumentReference.getWithSnapshotListener(listener: DocumentListener) : ListenerRegistration {
+    return addSnapshotListener { documentSnapshot, exception ->
+        listener(
+            documentSnapshot,
+            exception?.localizedMessage
+        )
+    }
+}
+
 actual fun DocumentSnapshot.documentReference() = reference

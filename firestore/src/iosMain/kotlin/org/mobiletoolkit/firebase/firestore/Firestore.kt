@@ -41,5 +41,13 @@ actual fun DocumentReference.getWithCallback(callback: DocumentCallback) {
         )
     }
 }
+actual fun DocumentReference.getWithSnapshotListener(listener: DocumentListener) : ListenerRegistration {
+    return addSnapshotListener { snapshot, nsError ->
+        listener(
+            snapshot,
+            nsError?.localizedDescription
+        )
+    }
+}
 
 actual fun DocumentSnapshot.documentReference() = reference

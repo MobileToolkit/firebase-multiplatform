@@ -14,17 +14,12 @@ expect class DocumentSnapshot
 
 expect fun Firestore.withPath(path: String): CollectionReference
 
-//typealias CollectionCallback = (documents: List<DocumentSnapshot>, error: String?) -> Unit
-//typealias CollectionListener = (documents: List<DocumentSnapshot>, error: String?) -> Unit
-
 expect fun CollectionReference.documentWithID(id: String): DocumentReference
 expect fun CollectionReference.getWithCallback(queryBlock: ((query: Query) -> Query)? = null, callback: CollectionCallback)
 expect fun CollectionReference.getWithSnapshotListener(queryBlock: ((query: Query) -> Query)? = null, listener: CollectionListener) : ListenerRegistration
 
-//typealias DocumentCallback = (document: DocumentSnapshot?, error: String?) -> Unit
-//typealias DocumentListener = (document: DocumentSnapshot?, error: String?) -> Unit
-
 expect fun DocumentReference.docID(): String
 expect fun DocumentReference.getWithCallback(callback: DocumentCallback)
+expect fun DocumentReference.getWithSnapshotListener(listener: DocumentListener) : ListenerRegistration
 
 expect fun DocumentSnapshot.documentReference(): DocumentReference

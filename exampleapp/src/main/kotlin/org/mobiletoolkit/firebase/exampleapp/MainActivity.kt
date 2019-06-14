@@ -60,7 +60,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             val i = 0
         })
 
-        productsRepository.listen { products, error ->
+        productsRepository.observe { products, error ->
             val i = 0
         }
 

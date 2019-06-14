@@ -27,9 +27,9 @@ interface AsyncRepository<Identifier, Entity : Model<Identifier>> {
 
 //    // Listeners
 //
-//    fun get(identifier: Identifier, listener: AsyncRepositoryListener<Entity>)
-//
-    fun listen(listener: AsyncRepositoryListener<List<Entity>>)
+    fun observe(identifier: Identifier, listener: AsyncRepositoryListener<Entity>)
+
+    fun observe(listener: AsyncRepositoryListener<List<Entity>>)
 //
 //    fun releaseListener(listener: AsyncRepositoryListener<*, Entity>)
 //
