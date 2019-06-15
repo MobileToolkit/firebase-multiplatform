@@ -43,9 +43,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
 //        val product = productsRepository.get("3BheEX4po6D8kmbh5REc")
 
-        productsRepository.get("tm4BBM2ZWZH7GAO86jnL", callback = { product, error ->
+        productsRepository.get("tm4BBM2ZWZH7GAO86jnL") { product, error ->
             val i = 0
-        })
+        }
+
+        productsRepository.observe("tm4BBM2ZWZH7GAO86jnL") { product, error ->
+            val i = 0
+        }
 
 //        val products = productsRepository.get()
 
@@ -56,9 +60,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             val i = 0
         })
 
-        productsRepository.get(callback = { products, error ->
+        productsRepository.get { products, error ->
             val i = 0
-        })
+        }
 
         productsRepository.observe { products, error ->
             val i = 0

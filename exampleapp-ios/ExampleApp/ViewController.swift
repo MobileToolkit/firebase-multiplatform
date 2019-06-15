@@ -12,7 +12,7 @@ import UIKit
 
 class ViewController: UIViewController {
 
-    private var productsRepository: ProductsRepository? = nil
+    private var productsRepository: ProductsRepository!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,7 +22,15 @@ class ViewController: UIViewController {
         
 //        let exists = ProductsRepository(db: Firestore.firestore()).exists(identifier: "3BheEX4po6D8kmbh5REc")
         
-        productsRepository?.get(identifier: "tm4BBM2ZWZH7GAO86jnL") { (product, error) -> KotlinUnit in
+        productsRepository.get(identifier: "tm4BBM2ZWZH7GAO86jnL") { (product, error) -> KotlinUnit in
+            let i = 0
+            
+            print("product: \(String(describing: product))")
+            
+            return KotlinUnit()
+        }
+        
+        productsRepository.observe(identifier: "tm4BBM2ZWZH7GAO86jnL") { (product, error) -> KotlinUnit in
             let i = 0
             
             print("product: \(String(describing: product))")
@@ -32,15 +40,7 @@ class ViewController: UIViewController {
         
 //        let products = ProductsRepository(db: Firestore.firestore()).get()
         
-//        productsRepository?.get { (products, error) -> KotlinUnit in
-//            let i = 0
-//
-//            print("products: \(String(describing: products))")
-//
-//            return KotlinUnit()
-//        }
-        
-        productsRepository?.get(queryBlock: { (query) -> Query in
+        productsRepository.get(queryBlock: { (query) -> Query in
 //            return query.whereField("name", isEqualTo: "qwerty")
             return query.order(by: "price")
         }, callback: { (products, error) -> KotlinUnit in
@@ -51,27 +51,21 @@ class ViewController: UIViewController {
             return KotlinUnit()
         })
         
-//        ProductsRepository(db: Firestore.firestore()).exists(identifier: "3BheEX4po6D8kmbh5REc") { (exists, error) -> KotlinUnit in
-//            let ex = exists as! Bool
-//
-//            let i = 0
-//
-//            return KotlinUnit()
-//        }
-        
-//        ProductsRepository(db: Firestore.firestore()).get(identifier: "tm4BBM2ZWZH7GAO86jnL") { (product, error) -> KotlinUnit in
-//            let i = 0
-//            
-//            return KotlinUnit()
-//        }
-//        
-//        ProductsRepository(db: Firestore.firestore()).get() { (products, error) -> KotlinUnit in
-//            let i = 0
-//            
-//            return KotlinUnit()
-//        }
+        productsRepository.get { (products, error) -> KotlinUnit in
+            let i = 0
+            
+            print("products: \(String(describing: products))")
+            
+            return KotlinUnit()
+        }
+
+        productsRepository.observe { (products, error) -> KotlinUnit in
+            let i = 0
+            
+            print("products: \(String(describing: products))")
+            
+            return KotlinUnit()
+        }
     }
-
-
 }
 

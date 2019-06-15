@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		E904E8B62267EA3A004C12E8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E904E8B52267EA3A004C12E8 /* GoogleService-Info.plist */; };
-		E904E8E62268937B004C12E8 /* ProductsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = E904E8E52268937B004C12E8 /* ProductsRepository.swift */; };
 		E904E8E92268951B004C12E8 /* Firestore.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = E904E8E82268951B004C12E8 /* Firestore.xcconfig */; };
 		E93D7A062292208C008D238C /* ExampleAppShared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E93D7A022292207B008D238C /* ExampleAppShared.framework */; };
 		E93D7A072292208C008D238C /* ExampleAppShared.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E93D7A022292207B008D238C /* ExampleAppShared.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -68,7 +67,6 @@
 		E904E8D72267EB82004C12E8 /* Cartfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Cartfile; sourceTree = "<group>"; };
 		E904E8DD2267ED48004C12E8 /* CarthageInput.xcfilelist */ = {isa = PBXFileReference; lastKnownFileType = text.xcfilelist; path = CarthageInput.xcfilelist; sourceTree = "<group>"; };
 		E904E8DE2267ED65004C12E8 /* CarthageOutput.xcfilelist */ = {isa = PBXFileReference; lastKnownFileType = text.xcfilelist; path = CarthageOutput.xcfilelist; sourceTree = "<group>"; };
-		E904E8E52268937B004C12E8 /* ProductsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductsRepository.swift; sourceTree = "<group>"; };
 		E904E8E82268951B004C12E8 /* Firestore.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Firestore.xcconfig; sourceTree = "<group>"; };
 		E93D7A022292207B008D238C /* ExampleAppShared.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ExampleAppShared.framework; path = "../build/xcode-frameworks/ExampleAppShared.framework"; sourceTree = "<group>"; };
 		E9CD63DD2286FA480069BA82 /* gRPC-C++.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "gRPC-C++.framework"; path = "../Carthage/Build/iOS/gRPC-C++.framework"; sourceTree = "<group>"; };
@@ -168,14 +166,6 @@
 			name = "Framework Resources";
 			sourceTree = "<group>";
 		};
-		E904E8E422689364004C12E8 /* firestore */ = {
-			isa = PBXGroup;
-			children = (
-				E904E8E52268937B004C12E8 /* ProductsRepository.swift */,
-			);
-			path = firestore;
-			sourceTree = "<group>";
-		};
 		E9E59B3C226533EA0053DE4B = {
 			isa = PBXGroup;
 			children = (
@@ -205,7 +195,6 @@
 		E9E59B47226533EA0053DE4B /* ExampleApp */ = {
 			isa = PBXGroup;
 			children = (
-				E904E8E422689364004C12E8 /* firestore */,
 				E9E59B48226533EA0053DE4B /* AppDelegate.swift */,
 				E9E59B4A226533EA0053DE4B /* ViewController.swift */,
 				E9E59B4C226533EA0053DE4B /* Main.storyboard */,
@@ -435,7 +424,6 @@
 			files = (
 				E9E59B4B226533EA0053DE4B /* ViewController.swift in Sources */,
 				E9E59B49226533EA0053DE4B /* AppDelegate.swift in Sources */,
-				E904E8E62268937B004C12E8 /* ProductsRepository.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
