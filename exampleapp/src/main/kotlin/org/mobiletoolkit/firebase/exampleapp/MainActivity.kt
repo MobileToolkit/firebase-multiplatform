@@ -1,11 +1,12 @@
 package org.mobiletoolkit.firebase.exampleapp
 
 import android.os.Bundle
-import android.support.design.widget.NavigationView
-import android.support.design.widget.Snackbar
-import android.support.v4.view.GravityCompat
-import android.support.v7.app.ActionBarDrawerToggle
-import android.support.v7.app.AppCompatActivity
+import android.util.Log
+import com.google.android.material.navigation.NavigationView
+import com.google.android.material.snackbar.Snackbar
+import androidx.core.view.GravityCompat
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import com.google.firebase.firestore.FirebaseFirestore
@@ -39,33 +40,29 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         nav_view.setNavigationItemSelectedListener(this)
 
-        productsRepository = ProductsRepository(FirebaseFirestore.getInstance())
-
-//        val product = productsRepository.get("3BheEX4po6D8kmbh5REc")
+        productsRepository = ProductsRepository()
 
         productsRepository.get("tm4BBM2ZWZH7GAO86jnL") { product, error ->
-            val i = 0
+            Log.v("ProductsRepository", "product: $product")
         }
 
         productsRepository.observe("tm4BBM2ZWZH7GAO86jnL") { product, error ->
-            val i = 0
+            Log.v("ProductsRepository", "product: $product")
         }
-
-//        val products = productsRepository.get()
 
         productsRepository.get({
 //            it.whereEqualTo("name", "qwerty")
             it.orderBy("price")
         }, { products, error ->
-            val i = 0
+            Log.v("ProductsRepository", "products: $products")
         })
 
         productsRepository.get { products, error ->
-            val i = 0
+            Log.v("ProductsRepository", "products: $products")
         }
 
         productsRepository.observe { products, error ->
-            val i = 0
+            Log.v("ProductsRepository", "products: $products")
         }
 
         val i = 0

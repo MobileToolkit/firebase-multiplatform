@@ -19,52 +19,28 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view.
 
         productsRepository = ProductsRepository(db: Firestore.firestore())
-        
-//        let exists = ProductsRepository(db: Firestore.firestore()).exists(identifier: "3BheEX4po6D8kmbh5REc")
-        
-        productsRepository.get(identifier: "tm4BBM2ZWZH7GAO86jnL") { (product, error) -> KotlinUnit in
-            let i = 0
-            
+
+        productsRepository.get(identifier: "tm4BBM2ZWZH7GAO86jnL") { (product, error) -> Void in
             print("product: \(String(describing: product))")
-            
-            return KotlinUnit()
         }
         
-        productsRepository.observe(identifier: "tm4BBM2ZWZH7GAO86jnL") { (product, error) -> KotlinUnit in
-            let i = 0
-            
+        productsRepository.observe(identifier: "tm4BBM2ZWZH7GAO86jnL") { (product, error) -> Void in
             print("product: \(String(describing: product))")
-            
-            return KotlinUnit()
         }
-        
-//        let products = ProductsRepository(db: Firestore.firestore()).get()
-        
+
         productsRepository.get(queryBlock: { (query) -> Query in
 //            return query.whereField("name", isEqualTo: "qwerty")
             return query.order(by: "price")
-        }, callback: { (products, error) -> KotlinUnit in
-            let i = 0
-            
+        }, callback: { (products, error) -> Void in
             print("products: \(String(describing: products))")
-            
-            return KotlinUnit()
         })
         
-        productsRepository.get { (products, error) -> KotlinUnit in
-            let i = 0
-            
+        productsRepository.get { (products, error) -> Void in
             print("products: \(String(describing: products))")
-            
-            return KotlinUnit()
         }
 
-        productsRepository.observe { (products, error) -> KotlinUnit in
-            let i = 0
-            
+        productsRepository.observe { (products, error) -> Void in
             print("products: \(String(describing: products))")
-            
-            return KotlinUnit()
         }
     }
 }

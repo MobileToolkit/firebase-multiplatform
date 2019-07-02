@@ -8,9 +8,7 @@ import org.mobiletoolkit.firebase.firestore.FirestoreRepository
 /**
  * Created by Sebastian Owodzin on 18/05/2019.
  */
-actual class ProductsRepository(
-    db: FirebaseFirestore
-) : FirestoreRepository<Product>(db) {
+actual class ProductsRepository : FirestoreRepository<Product>(FirebaseFirestore.getInstance()) {
 
     override val collectionPath = "/products"
 

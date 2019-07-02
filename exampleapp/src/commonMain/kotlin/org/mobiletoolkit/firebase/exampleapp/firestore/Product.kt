@@ -12,14 +12,6 @@ data class Product(
     val name: String,
     val description: String,
     val price: Double
-//    @SerialName("name")
-//    val name: String,
-//
-//    @SerialName("description")
-//    val description: String
-//
-//    @SerialName("price")
-//    val price: Double
 ) : FirestoreModel() {
 
 //    @Serializer(forClass = Product::class)
