@@ -6,15 +6,14 @@ import kotlinx.serialization.ImplicitReflectionSerializer
 import kotlinx.serialization.Mapper
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.stringify
+import org.mobiletoolkit.firebase.firestore.Firestore
 import org.mobiletoolkit.firebase.firestore.FirestoreRepository
 import platform.Foundation.NSThread
 
 /**
  * Created by Sebastian Owodzin on 18/05/2019.
  */
-actual class ProductsRepository(
-    db: FIRFirestore
-) : FirestoreRepository<Product>(db) {
+actual class ProductsRepository : FirestoreRepository<Product>(Firestore.firestore()) {
 
     override val collectionPath = "/products"
 

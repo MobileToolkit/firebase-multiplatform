@@ -12,13 +12,13 @@ import UIKit
 
 class ViewController: UIViewController {
 
-    private var productsRepository: ProductsRepository!
+    private lazy var productsRepository:  ProductsRepository = {
+        return  ProductsRepository()
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-
-        productsRepository = ProductsRepository(db: Firestore.firestore())
 
         productsRepository.get(identifier: "tm4BBM2ZWZH7GAO86jnL") { (product, error) -> Void in
             print("product: \(String(describing: product))")

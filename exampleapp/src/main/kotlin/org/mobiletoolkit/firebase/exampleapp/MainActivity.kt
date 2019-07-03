@@ -19,7 +19,9 @@ import org.mobiletoolkit.repository.AsyncRepositoryListener
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
-    private lateinit var productsRepository: ProductsRepository
+    private val productsRepository: ProductsRepository by lazy {
+        ProductsRepository()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,8 +41,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         toggle.syncState()
 
         nav_view.setNavigationItemSelectedListener(this)
-
-        productsRepository = ProductsRepository()
 
         productsRepository.get("tm4BBM2ZWZH7GAO86jnL") { product, error ->
             Log.v("ProductsRepository", "product: $product")
