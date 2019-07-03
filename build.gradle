@@ -2,7 +2,6 @@
 
 buildscript {
     ext {
-        defsPath = "${rootDir}/Defs"
         iosCinteropsPath = "${rootDir}/Carthage/Build/iOS"
 
         kotlinSerializationVersion = '0.11.1'

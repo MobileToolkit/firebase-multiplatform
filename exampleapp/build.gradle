@@ -55,18 +55,10 @@ kotlin {
         fromPreset(iosTarget, 'ios') {
             binaries {
                 framework("${iosFrameworkName}") {
-                    embedBitcode('disable')
-                    linkerOpts '-rpath', '@executable_path/Frameworks'
-                    linkerOpts "-F${rootProject.iosCinteropsPath}"
-////                    linkerOpts '-framework Foundation'
-////                    linkerOpts '-framework MobileCoreServices'
-////                    linkerOpts '-framework StoreKit'
-//                    linkerOpts '-framework SystemConfiguration'
-//                    linkerOpts '-lz'
-////                    linkerOpts '-lsqlite3'
-//                    linkerOpts '-framework nanopb'
-//                    linkerOpts '-framework FirebaseCore'
-//                    linkerOpts '-framework GoogleUtilities'
+//                    embedBitcode 'disable'
+//                    embedBitcode 'marker' // for debug builds
+//                    embedBitcode 'bitcode' // for release builds
+                    isStatic = true
                 }
             }
         }

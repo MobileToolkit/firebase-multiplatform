@@ -46,10 +46,6 @@ dependencies {
     testImplementation "org.jetbrains.kotlin:kotlin-test-junit:$kotlinVersion"
 }
 
-//configurations {
-//    compileClasspath
-//}
-
 ext {
     iosFrameworkName = 'MobileToolkitFirestore'
 }
@@ -63,22 +59,16 @@ kotlin {
         fromPreset(iosTarget, 'ios') {
             binaries {
                 framework("${iosFrameworkName}") {
-                    embedBitcode('disable')
-                    linkerOpts '-rpath', '@executable_path/Frameworks'
-                    linkerOpts "-F${rootProject.iosCinteropsPath}"
-                    linkerOpts '-framework SystemConfiguration'
-                    linkerOpts '-lz'
-                    linkerOpts '-framework nanopb'
-                    linkerOpts '-framework FirebaseCore'
-                    linkerOpts '-framework GoogleUtilities'
+//                    embedBitcode 'disable'
+//                    embedBitcode 'marker' // for debug builds
+//                    embedBitcode 'bitcode' // for release builds
+                    isStatic = true
                 }
             }
             compilations.main {
                 cinterops {
                     firestore {
                         packageName 'com.google.firebase.firestore'
-                        defFile = file("${rootProject.defsPath}/FirebaseFirestore.def")
-//                        linkerOpts "-F${rootProject.iosCinteropsPath}"
                         includeDirs "${rootProject.iosCinteropsPath}/FirebaseFirestore.framework/Headers"
                     }
                 }
@@ -100,11 +90,6 @@ kotlin {
             }
         }
         androidMain {
-//            configurations {
-//                compile.exclude group: 'org.jetbrains.kotlinx', module: 'atomicfu-common'
-//                compile.exclude group: 'org.jetbrains.kotlinx', module: 'kotlinx-coroutines-core'
-//            }
-
             dependencies {
                 implementation kotlin('stdlib')
                 api 'com.google.firebase:firebase-firestore:20.1.0'
