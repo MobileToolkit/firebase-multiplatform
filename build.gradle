@@ -4,8 +4,9 @@ buildscript {
     ext {
         iosCinteropsPath = "${rootDir}/Carthage/Build/iOS"
 
+        kotlinCoroutinesVersion = '1.2.2'
         kotlinSerializationVersion = '0.11.1'
-        kotlinVersion = '1.3.40'
+        kotlinVersion = '1.3.41'
     }
     repositories {
         google()
