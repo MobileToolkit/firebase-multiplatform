@@ -8,10 +8,9 @@ import org.mobiletoolkit.repository.AsyncRepositoryListener
  * Created by Sebastian Owodzin on 17/04/2019.
  */
 abstract class FirestoreRepository<Entity : FirestoreModel>(
-    private val db: Firestore
+    private val db: Firestore,
+    private val collectionPath: String
 ) : AsyncRepository<String, Entity> {
-
-    protected abstract val collectionPath: String
 
     protected val collectionReference: CollectionReference
         get() = db.withPath(collectionPath)
@@ -23,15 +22,6 @@ abstract class FirestoreRepository<Entity : FirestoreModel>(
     protected fun buildEntity(snapshot: DocumentSnapshot): Entity? = with(deserialize(snapshot)) {
         this?.documentReference = snapshot.documentReference()
         return@with this
-    }
-
-    override fun get(identifier: String, callback: AsyncRepositoryCallback<Entity?>) {
-        documentReference(identifier).getWithCallback { document, error ->
-            callback(
-                document?.let { buildEntity(it) },
-                error
-            )
-        }
     }
 
     override fun get(callback: AsyncRepositoryCallback<List<Entity>>) {
@@ -50,6 +40,27 @@ abstract class FirestoreRepository<Entity : FirestoreModel>(
                 error
             )
         }
+    }
+
+    override fun get(identifier: String, callback: AsyncRepositoryCallback<Entity?>) {
+        documentReference(identifier).getWithCallback { document, error ->
+            callback(
+                document?.let { buildEntity(it) },
+                error
+            )
+        }
+    }
+
+    override fun create(entity: Entity, identifier: String?, callback: AsyncRepositoryCallback<Boolean>) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun update(entity: Entity, callback: AsyncRepositoryCallback<Boolean>) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun delete(entity: Entity, callback: AsyncRepositoryCallback<Boolean>) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun observe(identifier: String, listener: AsyncRepositoryListener<Entity>) {

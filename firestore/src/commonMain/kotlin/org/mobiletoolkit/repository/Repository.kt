@@ -5,7 +5,7 @@ package org.mobiletoolkit.repository
  */
 interface Repository<Identifier, Entity : Model<Identifier>> {
 
-//    fun exists(identifier: Identifier): Boolean
+    fun get(): List<Entity>
 
     fun get(identifier: Identifier): Entity?
 
@@ -20,6 +20,4 @@ interface Repository<Identifier, Entity : Model<Identifier>> {
 //    fun delete(identifier: Identifier): Boolean
 //    fun delete(vararg entities: Entity): Boolean
 //    fun delete(vararg identifiers: Identifier): Boolean
-
-    fun get(): List<Entity>
 }
