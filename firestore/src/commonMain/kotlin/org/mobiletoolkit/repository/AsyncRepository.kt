@@ -1,7 +1,7 @@
 package org.mobiletoolkit.repository
 
 /**
- * Created by Sebastian Owodzin on 17/04/2019.
+ * Created by Sebastian Owodzin on 10/08/2019.
  */
 interface AsyncRepository<Identifier, Entity : Model<Identifier>> {
 
@@ -25,45 +25,9 @@ interface AsyncRepository<Identifier, Entity : Model<Identifier>> {
 ////    fun delete(vararg entities: Entity, callback: AsyncRepositoryCallback<Boolean>)
 ////    fun delete(vararg identifiers: Identifier, callback: AsyncRepositoryCallback<Boolean>)
 //
-
-//    // Listeners
-//
-    fun observe(identifier: Identifier, listener: AsyncRepositoryListener<Entity>)
-
-    fun observe(listener: AsyncRepositoryListener<List<Entity>>)
-//
-//    fun releaseListener(listener: AsyncRepositoryListener<*, Entity>)
-//
-//    interface Change<T> {
-//
-//        enum class Type {
-//            Added, Modified, Removed
-//        }
-//
-//        val type: Type
-//
-//        val oldIndex: Int
-//            get() = -1
-//
-//        val newIndex: Int
-//
-//        val data: T?
-//            get() = null
-//    }
 }
 
 typealias AsyncRepositoryCallback<DataType> = (
     data: DataType,
-    error: String?
+    error: Exception?
 ) -> Unit
-
-typealias AsyncRepositoryListener<DataType> = (
-    data: DataType?,
-    error: String?
-) -> Unit
-
-//typealias AsyncRepositoryListener<DataType, ChangeType> = (
-//    data: DataType?,
-//    changeSet: Set<AsyncRepository.Change<ChangeType>>?,
-//    exception: Exception?
-//) -> Unit

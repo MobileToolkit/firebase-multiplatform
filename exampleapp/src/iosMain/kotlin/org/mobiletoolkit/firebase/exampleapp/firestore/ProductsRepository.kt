@@ -1,8 +1,8 @@
 package org.mobiletoolkit.firebase.exampleapp.firestore
 
-import kotlinx.serialization.ImplicitReflectionSerializer
-import kotlinx.serialization.Mapper
+import kotlinx.serialization.UnstableDefault
 import kotlinx.serialization.json.Json
+import org.mobiletoolkit.extensions.toJsonString
 import org.mobiletoolkit.firebase.firestore.DocumentSnapshot
 import org.mobiletoolkit.firebase.firestore.Firestore
 import org.mobiletoolkit.firebase.firestore.FirestoreRepository
@@ -10,18 +10,20 @@ import org.mobiletoolkit.firebase.firestore.FirestoreRepository
 /**
  * Created by Sebastian Owodzin on 18/05/2019.
  */
-actual class ProductsRepository : FirestoreRepository<Product>(Firestore.firestore(), "/products") {
+@UseExperimental(UnstableDefault::class)
+actual class ProductsRepository : FirestoreRepository<Product>(
+    Firestore.firestore(),
+    "/products"
+) {
 
-    @UseExperimental(ImplicitReflectionSerializer::class)
     override fun deserialize(snapshot: DocumentSnapshot): Product? =
         snapshot.data()?.let {
             try {
-                val data = it as Map<String, Any>
-                val jsonString = "{${data.map { "\"${it.key}\": \"${it.value}\"" }.joinToString(", ")}}"
+                with(Json.nonstrict) {
+                    fromJson(Product.serializer(), parseJson(it.toJsonString()))
+                }
 
-                Json.nonstrict.fromJson(Product.serializer(), Json.nonstrict. parseJson(jsonString))
-
-//                Mapper.unmap(Product.serializer(), it as Map<String, Any>) // FIXME - this seems to be not working on iOS
+//                Mapper.unmap(Product.serializer(), it as Map<String, Any>) // FIXME - this is not yet supported on iOS
             } catch (e: Exception) {
                 e.printStackTrace()
                 println("exception: ${e.message}")

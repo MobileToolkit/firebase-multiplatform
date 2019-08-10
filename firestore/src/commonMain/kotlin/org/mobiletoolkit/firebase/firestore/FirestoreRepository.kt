@@ -1,19 +1,20 @@
 package org.mobiletoolkit.firebase.firestore
 
-import org.mobiletoolkit.repository.AsyncRepository
 import org.mobiletoolkit.repository.AsyncRepositoryCallback
-import org.mobiletoolkit.repository.AsyncRepositoryListener
+import org.mobiletoolkit.repository.ObservableAsyncRepository
+import org.mobiletoolkit.repository.ObservableAsyncRepositoryListener
 
 /**
  * Created by Sebastian Owodzin on 17/04/2019.
  */
 abstract class FirestoreRepository<Entity : FirestoreModel>(
     private val db: Firestore,
-    private val collectionPath: String
-) : AsyncRepository<String, Entity> {
+    private val collectionPath: String,
+    private val debugOn: Boolean = false
+) : ObservableAsyncRepository<String, Entity> {
 
     protected val collectionReference: CollectionReference
-        get() = db.withPath(collectionPath)
+        get() = db.collectionReference(collectionPath)
 
     protected fun documentReference(identifier: String): DocumentReference = collectionReference.documentWithID(identifier)
 
@@ -63,22 +64,62 @@ abstract class FirestoreRepository<Entity : FirestoreModel>(
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun observe(identifier: String, listener: AsyncRepositoryListener<Entity>) {
-        val listenerRegistration = documentReference(identifier).getWithSnapshotListener { document, error ->
-            listener(
-                document?.let { buildEntity(it) },
-                error
-            )
-        }
+    private val repositoryObservers = mutableListOf<ObserverReference>()
+
+    override fun observe(listener: ObservableAsyncRepositoryListener<List<Entity>>): ObservableAsyncRepository.ObserverReference {
+        val observerReference = ObserverReference(
+            collectionReference.getWithSnapshotListener { documents, error ->
+                listener(
+                    documents.mapNotNull { buildEntity(it) },
+                    error
+                )
+            }
+        )
+
+        repositoryObservers.add(observerReference)
+
+        return observerReference
     }
 
-    override fun observe(listener: AsyncRepositoryListener<List<Entity>>) {
-        val listenerRegistration = collectionReference.getWithSnapshotListener { documents, error ->
-            listener(
-                documents.mapNotNull { buildEntity(it) },
-                error
-            )
-        }
+    fun observe(queryBlock: (query: Query) -> Query, listener: ObservableAsyncRepositoryListener<List<Entity>>): ObservableAsyncRepository.ObserverReference {
+        val observerReference = ObserverReference(
+            collectionReference.getWithSnapshotListener(queryBlock) { documents, error ->
+                listener(
+                    documents.mapNotNull { buildEntity(it) },
+                    error
+                )
+            }
+        )
+
+        repositoryObservers.add(observerReference)
+
+        return observerReference
+    }
+
+    override fun observe(identifier: String, listener: ObservableAsyncRepositoryListener<Entity>): ObservableAsyncRepository.ObserverReference {
+        val observerReference = ObserverReference(
+                documentReference(identifier).getWithSnapshotListener { document, error ->
+                listener(
+                    document?.let { buildEntity(it) },
+                    error
+                )
+            }
+        )
+
+        repositoryObservers.add(observerReference)
+
+        return observerReference
+    }
+
+    override fun stopAllObservers() {
+        repositoryObservers.forEach(ObserverReference::stop)
+        repositoryObservers.clear()
+    }
+
+    data class ObserverReference(
+        private val listenerRegistration: ListenerRegistration
+    ) : ObservableAsyncRepository.ObserverReference {
+        override fun stop() = removeListenerRegistration(listenerRegistration)
     }
 }
 

@@ -54,15 +54,21 @@ kotlin {
     android('android')
 
     targets {
-        final def iosTarget = System.getenv('SDK_NAME')?.startsWith('iphoneos') ? presets.iosArm64 : presets.iosX64
+        final Boolean isDeviceBuild = System.getenv('SDK_NAME')?.startsWith('iphoneos')
+        final def iosTarget = isDeviceBuild ? presets.iosArm64 : presets.iosX64
+        final String buildType = project.findProperty('XCODE_CONFIGURATION')?.toUpperCase() ?: 'DEBUG'
+        final String bitcodeFlag = isDeviceBuild ? ( buildType == 'DEBUG' ? 'marker' : 'bitcode' ) : 'disable'
 
         fromPreset(iosTarget, 'ios') {
             binaries {
                 framework("${iosFrameworkName}") {
+                    embedBitcode = bitcodeFlag
 //                    embedBitcode 'disable'
 //                    embedBitcode 'marker' // for debug builds
 //                    embedBitcode 'bitcode' // for release builds
                     isStatic = true
+                    freeCompilerArgs += '-Xobjc-generics'
+                    freeCompilerArgs += '-Xuse-experimental=kotlin.Experimental'
                 }
             }
             compilations.main {
@@ -92,7 +98,7 @@ kotlin {
         androidMain {
             dependencies {
                 implementation kotlin('stdlib')
-                api 'com.google.firebase:firebase-firestore:20.1.0'
+                api 'com.google.firebase:firebase-firestore:20.2.0'
 //                api "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlinCoroutinesVersion"
 //                api "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinCoroutinesVersion"
                 api "org.jetbrains.kotlinx:kotlinx-serialization-runtime:$kotlinSerializationVersion"

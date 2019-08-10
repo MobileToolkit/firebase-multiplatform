@@ -2,20 +2,16 @@ package org.mobiletoolkit.firebase.exampleapp
 
 import android.os.Bundle
 import android.util.Log
-import com.google.android.material.navigation.NavigationView
-import com.google.android.material.snackbar.Snackbar
-import androidx.core.view.GravityCompat
-import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.Query
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GravityCompat
+import com.google.android.material.navigation.NavigationView
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
-import org.mobiletoolkit.firebase.exampleapp.firestore.Product
 import org.mobiletoolkit.firebase.exampleapp.firestore.ProductsRepository
-import org.mobiletoolkit.repository.AsyncRepositoryListener
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -42,30 +38,51 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         nav_view.setNavigationItemSelectedListener(this)
 
-        productsRepository.get("tm4BBM2ZWZH7GAO86jnL") { product, error ->
-            Log.v("ProductsRepository", "product: $product")
-        }
+//        productsRepository.get("wrong_id") { product, error ->
+//            Log.v("ProductsRepository", "get product: $product | error: $error")
+//        }
+//
+//        productsRepository.get("tm4BBM2ZWZH7GAO86jnL") { product, error ->
+//            Log.v("ProductsRepository", "get product: $product | error: $error")
+//        }
+//
+//        productsRepository.observe("tm4BBM2ZWZH7GAO86jnL") { product, error ->
+//            Log.v("ProductsRepository", "observe product: $product | error: $error")
+//        }
+//
+//        productsRepository.observe("oUFKwGYbNKlIZozrfh9O") { product, error ->
+//            Log.v("ProductsRepository", "observe product: $product | error: $error")
+//        }
+//
+//        productsRepository.get({
+////            it.whereEqualTo("name", "qwerty")
+//            it.orderBy("price")
+//        }, { products, error ->
+//            Log.v("ProductsRepository", "get products: $products | error: $error")
+//        })
+//
+//        productsRepository.get { products, error ->
+//            Log.v("ProductsRepository", "get products: $products | error: $error")
+//        }
 
-        productsRepository.observe("tm4BBM2ZWZH7GAO86jnL") { product, error ->
-            Log.v("ProductsRepository", "product: $product")
-        }
-
-        productsRepository.get({
+        val observerReference1 = productsRepository.observe({
 //            it.whereEqualTo("name", "qwerty")
             it.orderBy("price")
         }, { products, error ->
-            Log.v("ProductsRepository", "products: $products")
+            Log.v("ProductsRepository", "observe products: $products | error: $error")
         })
 
-        productsRepository.get { products, error ->
-            Log.v("ProductsRepository", "products: $products")
+        val observerReference2 = productsRepository.observe { products, error ->
+            Log.v("ProductsRepository", "observe products: $products | error: $error")
         }
 
-        productsRepository.observe { products, error ->
-            Log.v("ProductsRepository", "products: $products")
-        }
+        observerReference2.stop()
+    }
 
-        val i = 0
+    override fun onDestroy() {
+        super.onDestroy()
+
+        productsRepository.stopAllObservers()
     }
 
     override fun onBackPressed() {
