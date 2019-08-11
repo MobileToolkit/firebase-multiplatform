@@ -1,5 +1,6 @@
 package org.mobiletoolkit.firebase.firestore
 
+import kotlinx.serialization.KSerializer
 import org.mobiletoolkit.repository.AsyncRepositoryCallback
 import org.mobiletoolkit.repository.ObservableAsyncRepository
 import org.mobiletoolkit.repository.ObservableAsyncRepositoryListener
@@ -10,25 +11,24 @@ import org.mobiletoolkit.repository.ObservableAsyncRepositoryListener
 abstract class FirestoreRepository<Entity : FirestoreModel>(
     private val db: Firestore,
     private val collectionPath: String,
+    protected val serializer: KSerializer<Entity>,
     private val debugOn: Boolean = false
 ) : ObservableAsyncRepository<String, Entity> {
 
     protected val collectionReference: CollectionReference
         get() = db.collectionReference(collectionPath)
 
-    protected fun documentReference(identifier: String): DocumentReference = collectionReference.documentWithID(identifier)
+    protected fun documentReference(identifier: String?): DocumentReference = collectionReference.documentWithID(identifier)
 
-    protected abstract fun deserialize(snapshot: DocumentSnapshot): Entity?
-
-    protected fun buildEntity(snapshot: DocumentSnapshot): Entity? = with(deserialize(snapshot)) {
-        this?.documentReference = snapshot.documentReference()
-        return@with this
-    }
+//    protected fun buildEntity(snapshot: DocumentSnapshot): Entity? = with(snapshot.deserialize(serializer)) {
+//        this?.documentReference = snapshot.documentReference
+//        return@with this
+//    }
 
     override fun get(callback: AsyncRepositoryCallback<List<Entity>>) {
         collectionReference.getWithCallback { documents, error ->
             callback(
-                documents.mapNotNull { buildEntity(it) },
+                documents.mapNotNull { it.deserialize(serializer) },
                 error
             )
         }
@@ -37,7 +37,7 @@ abstract class FirestoreRepository<Entity : FirestoreModel>(
     fun get(queryBlock: (query: Query) -> Query, callback: AsyncRepositoryCallback<List<Entity>>) {
         collectionReference.getWithCallback(queryBlock) { documents, error ->
             callback(
-                documents.mapNotNull { buildEntity(it) },
+                documents.mapNotNull { it.deserialize(serializer) },
                 error
             )
         }
@@ -46,14 +46,14 @@ abstract class FirestoreRepository<Entity : FirestoreModel>(
     override fun get(identifier: String, callback: AsyncRepositoryCallback<Entity?>) {
         documentReference(identifier).getWithCallback { document, error ->
             callback(
-                document?.let { buildEntity(it) },
+                document?.deserialize(serializer),
                 error
             )
         }
     }
 
     override fun create(entity: Entity, identifier: String?, callback: AsyncRepositoryCallback<Boolean>) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        documentReference(identifier).setDocumentData(entity.serialize(serializer))
     }
 
     override fun update(entity: Entity, callback: AsyncRepositoryCallback<Boolean>) {
@@ -70,7 +70,7 @@ abstract class FirestoreRepository<Entity : FirestoreModel>(
         val observerReference = ObserverReference(
             collectionReference.getWithSnapshotListener { documents, error ->
                 listener(
-                    documents.mapNotNull { buildEntity(it) },
+                    documents.mapNotNull { it.deserialize(serializer) },
                     error
                 )
             }
@@ -85,7 +85,7 @@ abstract class FirestoreRepository<Entity : FirestoreModel>(
         val observerReference = ObserverReference(
             collectionReference.getWithSnapshotListener(queryBlock) { documents, error ->
                 listener(
-                    documents.mapNotNull { buildEntity(it) },
+                    documents.mapNotNull { it.deserialize(serializer) },
                     error
                 )
             }
@@ -100,7 +100,7 @@ abstract class FirestoreRepository<Entity : FirestoreModel>(
         val observerReference = ObserverReference(
                 documentReference(identifier).getWithSnapshotListener { document, error ->
                 listener(
-                    document?.let { buildEntity(it) },
+                    document?.deserialize(serializer),
                     error
                 )
             }
@@ -119,7 +119,7 @@ abstract class FirestoreRepository<Entity : FirestoreModel>(
     data class ObserverReference(
         private val listenerRegistration: ListenerRegistration
     ) : ObservableAsyncRepository.ObserverReference {
-        override fun stop() = removeListenerRegistration(listenerRegistration)
+        override fun stop() = listenerRegistration.remove()
     }
 }
 

@@ -42,9 +42,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 //            Log.v("ProductsRepository", "get product: $product | error: $error")
 //        }
 //
-//        productsRepository.get("tm4BBM2ZWZH7GAO86jnL") { product, error ->
-//            Log.v("ProductsRepository", "get product: $product | error: $error")
-//        }
+        productsRepository.get("tm4BBM2ZWZH7GAO86jnL") { product, error ->
+            Log.v("ProductsRepository", "get product: $product | error: $error")
+        }
 //
 //        productsRepository.observe("tm4BBM2ZWZH7GAO86jnL") { product, error ->
 //            Log.v("ProductsRepository", "observe product: $product | error: $error")
@@ -65,18 +65,26 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 //            Log.v("ProductsRepository", "get products: $products | error: $error")
 //        }
 
-        val observerReference1 = productsRepository.observe({
-//            it.whereEqualTo("name", "qwerty")
-            it.orderBy("price")
-        }, { products, error ->
-            Log.v("ProductsRepository", "observe products: $products | error: $error")
-        })
+//        val observerReference1 = productsRepository.observe({
+////            it.whereEqualTo("name", "qwerty")
+//            it.orderBy("price")
+//        }, { products, error ->
+//            Log.v("ProductsRepository", "observe products: $products | error: $error")
+//        })
+//
+//        val observerReference2 = productsRepository.observe { products, error ->
+//            Log.v("ProductsRepository", "observe products: $products | error: $error")
+//        }
+//
+//        observerReference2.stop()
 
-        val observerReference2 = productsRepository.observe { products, error ->
-            Log.v("ProductsRepository", "observe products: $products | error: $error")
-        }
-
-        observerReference2.stop()
+//        productsRepository.create(Product("product-name", "product-description", 34.76)) { product, error ->
+//            Log.v("ProductsRepository", "create product: $product | error: $error")
+//        }
+//
+//        productsRepository.create(Product("test-name", "test-description", 1234.76), "test") { product, error ->
+//            Log.v("ProductsRepository", "create product: $product | error: $error")
+//        }
     }
 
     override fun onDestroy() {

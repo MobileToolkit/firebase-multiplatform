@@ -1,7 +1,6 @@
 package org.mobiletoolkit.firebase.exampleapp.firestore
 
-import kotlinx.serialization.Mapper
-import org.mobiletoolkit.firebase.firestore.DocumentSnapshot
+import org.mobiletoolkit.firebase.exampleapp.BuildConfig
 import org.mobiletoolkit.firebase.firestore.Firestore
 import org.mobiletoolkit.firebase.firestore.FirestoreRepository
 
@@ -10,9 +9,7 @@ import org.mobiletoolkit.firebase.firestore.FirestoreRepository
  */
 actual class ProductsRepository : FirestoreRepository<Product>(
     Firestore.getInstance(),
-    "/products"
-) {
-
-    override fun deserialize(snapshot: DocumentSnapshot): Product? =
-        snapshot.data?.let { Mapper.unmap(Product.serializer(), it) }
-}
+    "/products",
+    Product.serializer(),
+    BuildConfig.DEBUG
+)

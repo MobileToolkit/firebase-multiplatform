@@ -24,9 +24,9 @@ class ViewController: UIViewController {
 //            print("ProductsRepository::get product: \(String(describing: product)) | error: \(String(describing: error))")
 //        }
 //
-//        productsRepository.get(identifier: "tm4BBM2ZWZH7GAO86jnL") { (product, error) -> Void in
-//            print("ProductsRepository::get product: \(String(describing: product)) | error: \(String(describing: error))")
-//        }
+        productsRepository.get(identifier: "tm4BBM2ZWZH7GAO86jnL") { (product, error) -> Void in
+            print("ProductsRepository::get product: \(String(describing: product)) | error: \(String(describing: error))")
+        }
 //
 //        productsRepository.get(identifier: "oUFKwGYbNKlIZozrfh9O") { (product, error) -> Void in
 //            print("ProductsRepository::get product: \(String(describing: product)) | error: \(String(describing: error))")
@@ -47,18 +47,26 @@ class ViewController: UIViewController {
 //            print("ProductsRepository::get products: \(String(describing: products)) | error: \(String(describing: error))")
 //        }
 
-        let observerReference1 = productsRepository.observe(queryBlock: { (query) -> Query in
-//            return query.whereField("name", isEqualTo: "qwerty")
-            return query.order(by: "price")
-        }, listener: { (products, error) -> Void in
-            print("ProductsRepository::observe products: \(String(describing: products)) | error: \(String(describing: error))")
-        })
-
-        let observerReference2 = productsRepository.observe(listener: { (products, error) -> Void in
-            print("ProductsRepository::observe products: \(String(describing: products)) | error: \(String(describing: error))")
-        })
+//        let observerReference1 = productsRepository.observe(queryBlock: { (query) -> Query in
+////            return query.whereField("name", isEqualTo: "qwerty")
+//            return query.order(by: "price")
+//        }, listener: { (products, error) -> Void in
+//            print("ProductsRepository::observe products: \(String(describing: products)) | error: \(String(describing: error))")
+//        })
+//
+//        let observerReference2 = productsRepository.observe(listener: { (products, error) -> Void in
+//            print("ProductsRepository::observe products: \(String(describing: products)) | error: \(String(describing: error))")
+//        })
+//
+//        observerReference2.stop()
         
-        observerReference2.stop()
+//        productsRepository.create(entity: Product(name: "product-name", description: "product-description", price: 34.76), identifier: nil) { (product, error) -> Void in
+//            print("ProductsRepository::create product: \(String(describing: product)) | error: \(String(describing: error))")
+//        }
+//
+//        productsRepository.create(entity: Product(name: "test-name", description: "test-description", price: 1234.76), identifier: "test") { (product, error) -> Void in
+//            print("ProductsRepository::create product: \(String(describing: product)) | error: \(String(describing: error))")
+//        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
