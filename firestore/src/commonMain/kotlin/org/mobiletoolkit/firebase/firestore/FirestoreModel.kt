@@ -17,5 +17,6 @@ abstract class FirestoreModel : Model<String> {
     override val identifier: String?
         get() = documentReference?.documentId
 
-    internal inline fun <Entity : FirestoreModel> serialize(serializer: KSerializer<Entity>): Map<String, Any> = Mapper.map(serializer, this as Entity)
+    @Suppress("UNCHECKED_CAST")
+    internal fun <Entity : FirestoreModel> serialize(serializer: KSerializer<Entity>): Map<String, Any> = Mapper.map(serializer, this as Entity)
 }

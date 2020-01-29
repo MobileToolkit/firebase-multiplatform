@@ -1,6 +1,6 @@
 package org.mobiletoolkit.firebase.exampleapp.firestore
 
-import org.mobiletoolkit.firebase.firestore.Firestore
+import org.mobiletoolkit.firebase.firestore.internal.Firestore
 import org.mobiletoolkit.firebase.firestore.FirestoreRepository
 
 /**

@@ -27,7 +27,4 @@ interface AsyncRepository<Identifier, Entity : Model<Identifier>> {
 //
 }
 
-typealias AsyncRepositoryCallback<DataType> = (
-    data: DataType,
-    error: Exception?
-) -> Unit
+typealias AsyncRepositoryCallback<T> = (data: T, error: Exception?) -> Unit

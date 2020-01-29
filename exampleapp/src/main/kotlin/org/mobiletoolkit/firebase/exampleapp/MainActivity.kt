@@ -11,6 +11,7 @@ import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
+import org.mobiletoolkit.firebase.exampleapp.firestore.Product
 import org.mobiletoolkit.firebase.exampleapp.firestore.ProductsRepository
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -42,9 +43,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 //            Log.v("ProductsRepository", "get product: $product | error: $error")
 //        }
 //
-        productsRepository.get("tm4BBM2ZWZH7GAO86jnL") { product, error ->
-            Log.v("ProductsRepository", "get product: $product | error: $error")
-        }
+//        productsRepository.get("tm4BBM2ZWZH7GAO86jnL") { product, error ->
+//            Log.v("ProductsRepository", "get product: $product | error: $error")
+//        }
 //
 //        productsRepository.observe("tm4BBM2ZWZH7GAO86jnL") { product, error ->
 //            Log.v("ProductsRepository", "observe product: $product | error: $error")
@@ -82,9 +83,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 //            Log.v("ProductsRepository", "create product: $product | error: $error")
 //        }
 //
-//        productsRepository.create(Product("test-name", "test-description", 1234.76), "test") { product, error ->
-//            Log.v("ProductsRepository", "create product: $product | error: $error")
-//        }
+        productsRepository.create(Product("test-name", "test-description", 1234.76), "test") { product, error ->
+            Log.v("ProductsRepository", "create product: $product | error: $error")
+        }
     }
 
     override fun onDestroy() {
