@@ -3,7 +3,7 @@ package org.mobiletoolkit.firebase.firestore
 /**
  * Created by Sebastian Owodzin on 12/08/2019.
  */
-actual typealias CollectionReference = com.google.firebase.firestore.FIRCollectionReference
+actual typealias CollectionReference = native.firestore.FIRCollectionReference
 
 actual fun CollectionReference.documentWithID(id: String?): DocumentReference = if (id === null) documentWithAutoID() else documentWithPath(id)
 

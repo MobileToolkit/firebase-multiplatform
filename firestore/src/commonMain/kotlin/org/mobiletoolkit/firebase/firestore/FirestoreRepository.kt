@@ -1,7 +1,6 @@
 package org.mobiletoolkit.firebase.firestore
 
 import kotlinx.serialization.KSerializer
-import kotlinx.serialization.UnstableDefault
 import org.mobiletoolkit.repository.AsyncRepositoryCallback
 import org.mobiletoolkit.repository.ObservableAsyncRepository
 import org.mobiletoolkit.repository.ObservableAsyncRepositoryListener
@@ -9,7 +8,6 @@ import org.mobiletoolkit.repository.ObservableAsyncRepositoryListener
 /**
  * Created by Sebastian Owodzin on 17/04/2019.
  */
-@UseExperimental(UnstableDefault::class)
 abstract class FirestoreRepository<Entity : FirestoreModel>(
     private val db: Firestore,
     private val collectionPath: String,

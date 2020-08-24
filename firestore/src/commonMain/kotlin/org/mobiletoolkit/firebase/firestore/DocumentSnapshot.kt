@@ -1,7 +1,6 @@
 package org.mobiletoolkit.firebase.firestore
 
 import kotlinx.serialization.KSerializer
-import kotlinx.serialization.UnstableDefault
 import org.mobiletoolkit.firebase.firestore.FirestoreModel
 
 /**
@@ -13,5 +12,4 @@ expect val DocumentSnapshot.documentReference: DocumentReference
 
 expect val DocumentSnapshot.documentData: Map<String, Any>?
 
-@UnstableDefault
 expect fun <Entity : FirestoreModel> DocumentSnapshot.deserialize(serializer: KSerializer<Entity>): Entity?

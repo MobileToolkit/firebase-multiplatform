@@ -3,7 +3,7 @@ package org.mobiletoolkit.firebase.firestore
 /**
  * Created by Sebastian Owodzin on 12/08/2019.
  */
-actual typealias DocumentReference = com.google.firebase.firestore.FIRDocumentReference
+actual typealias DocumentReference = native.firestore.FIRDocumentReference
 
 actual val DocumentReference.documentId: String
     get() = documentID

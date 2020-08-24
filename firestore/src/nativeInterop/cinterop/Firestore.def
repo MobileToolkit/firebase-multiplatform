@@ -1,0 +1,40 @@
+language = Objective-C
+package = native.firestore
+headers = FIRApp.h \
+          FIRConfiguration.h \
+          FirebaseCore.h \
+          FIRLoggerLevel.h \
+          FIROptions.h \
+          GULLoggerCodes.h \
+          GULLoggerLevel.h \
+          GULNSData+zlib.h \
+          FIRCollectionReference.h \
+          FIRDocumentChange.h \
+          FIRDocumentReference.h \
+          FIRDocumentSnapshot.h \
+          FirebaseFirestore.h \
+          FIRFieldPath.h \
+          FIRFieldValue.h \
+          FIRFirestore.h \
+          FIRFirestoreErrors.h \
+          FIRFirestoreSettings.h \
+          FIRFirestoreSource.h \
+          FIRGeoPoint.h \
+          FIRListenerRegistration.h \
+          FIRQuery.h \
+          FIRQuerySnapshot.h \
+          FIRSnapshotMetadata.h \
+          FIRTimestamp.h \
+          FIRTransaction.h \
+          FIRWriteBatch.h
+excludeDependentModules = true
+compilerOpts = -framework FirebaseFirestore
+linkerOpts = -framework abseil \
+             -framework BoringSSL-GRPC \
+             -framework FirebaseCore \
+             -framework FirebaseFirestore \
+             -framework GoogleUtilities \
+             -framework gRPC-C++ \
+             -framework gRPC-Core \
+             -framework leveldb-library \
+             -framework nanopb

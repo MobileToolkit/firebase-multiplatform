@@ -1,7 +1,8 @@
 package org.mobiletoolkit.firebase.firestore
 
+import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.KSerializer
-import kotlinx.serialization.Mapper
+import kotlinx.serialization.properties.Properties
 import org.mobiletoolkit.firebase.firestore.FirestoreModel
 
 /**
@@ -15,8 +16,9 @@ actual val DocumentSnapshot.documentReference: DocumentReference
 actual val DocumentSnapshot.documentData: Map<String, Any>?
     get() = data
 
+@OptIn(ExperimentalSerializationApi::class)
 actual fun <Entity : FirestoreModel> DocumentSnapshot.deserialize(serializer: KSerializer<Entity>): Entity? {
-    val entity = documentData?.let { Mapper.unmap(serializer, it) }
+    val entity = documentData?.let { Properties.decodeFromMap(serializer, it) }
 
     entity?.documentReference = documentReference
 
